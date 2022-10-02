@@ -6,7 +6,6 @@ import VideoPlayer from './components/VideoPlayer';
 // import Sidebar from './components/Sidebar';
 import Notifications from './components/Notification';
 
-;
 
 const App = () => {
   //  const [classes,setclass] = useState(useStyles)
