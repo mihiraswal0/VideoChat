@@ -27,7 +27,7 @@ const Homepage = () => {
         borderRadius="lg"
         borderWidth="1px"
       >
-        <Text fontSize="4xl" fontFamily="Work sans">
+        <Text fontSize="4xl" fontFamily="Work sans" textAlign="center" fontWeight="bold">
          M.E.R.N Chat
         </Text>
       </Box>
