@@ -8,10 +8,8 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 
 
-const Signup = () => {
-  const [name, setName] = useState();
+const Login = () => {
   const [email, setEmail] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -23,13 +21,6 @@ const Signup = () => {
 
   return (
     <VStack spacing="5px">
-    <FormControl id="first-name" isRequired>
-      <FormLabel>Name</FormLabel>
-      <Input
-        placeholder="Enter Your Name"
-        onChange={(e) => setName(e.target.value)}
-      />
-    </FormControl>
     <FormControl id="email" isRequired>
       <FormLabel>Email Address</FormLabel>
       <Input
@@ -61,11 +52,22 @@ const Signup = () => {
       onClick={submitHandler}
       
     >
-      Sign Up
+      Log In
     </Button>
+    <Button
+        variant="solid"
+        colorScheme="red"
+        width="100%"
+        onClick={() => {
+          setEmail("guest@example.com");
+          setPassword("123456");
+        }}
+      >
+        Get Guest User Credentials
+      </Button>
   </VStack>
 );
 }
 
 
-export default Signup;
+export default Login;
