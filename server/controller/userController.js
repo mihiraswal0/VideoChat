@@ -5,14 +5,15 @@ const registerUser=async(req,res,next)=>{
     const {name,email,password,pic}=req.body;
     if(!name ||!email ||!password)
     {
-         res.status(400);
-        throw new Error("All fields are not filled");
+        
+     return res.status(400).json({message:"Enter All credentials required"});
     }
     const userEXist=await UserModel.findOne({email});
     if(userEXist)
     {
-        res.status(400);
-        throw new Error("User already exists");
+        // res.status(400);
+       return res.status(400).json({message:"USer already exists"});
+        // next( new Error("User already exists"));
     }
     const salt=await bcrypt.genSalt(5);
     const hashedPassword=await bcrypt.hash(password,salt);
@@ -34,12 +35,14 @@ const registerUser=async(req,res,next)=>{
         });
     }
     else{
-        res.status(400);
-        throw new Error("Failed to built");
+     
+        // next( new Error("Failed to built"));
+       return res.status(400).json({message: "Failed to build"});
     }
 
 }
 const authUser=async(req,res)=>{
+   
 const {email,password}=req.body;
 const user=await UserModel.findOne({email});
 
@@ -58,16 +61,31 @@ if(compare)
 }
 else
 {
-    res.status(400);
-    throw new Error("Password does not match");
+   return res.status(404).json({message: 'Invalid password'});    
 }
 }
 else
 {
-    res.status(400);
-    throw new Error("User does not exist");
+  return  res.status(404).json({message: ' User does not exist'});
 }
 
-
 };
-module.exports={registerUser,authUser};
+const allUser=async(req,res)=>{
+    console.log(req.body);
+    try{
+    const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+    const users = await UserModel.find(keyword).find({ _id: { $ne: req.user._id } });
+    res.status(200).json(users);
+    }
+    catch(err){
+        res.status(500).json({message:err.message});
+    }
+}
+module.exports={registerUser,authUser,allUser};
