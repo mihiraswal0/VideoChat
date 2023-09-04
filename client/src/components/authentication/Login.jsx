@@ -6,17 +6,19 @@ import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router";
+import { ChatState } from "../../Context/ChatProvider";
 
 
 const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
+
   const history = useHistory();
-  // const { setUser } = ChatState();
+  const { setUser } = ChatState();
   const submitHandler = async () => {
     setLoading(true);
     if (!email || !password) {
@@ -39,7 +41,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "http://localhost:5000/api/routes/user",
+        "http://localhost:5000/api/user/login",
         { email, password },
         config
       );
@@ -51,7 +53,7 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      // setUser(data);
+      setUser(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       history.push("/chats");
