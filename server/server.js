@@ -10,11 +10,12 @@ app.use(cors());
 app.use(bodyparser.json());
 const userRoutes=require('./routes/userRoutes.js');
 const { notFound,error } = require('./middleware/errorHandler.js');
-
+const chatRoutes =require('./routes/chatRoutes.js');
 app.get('/',(req,res)=>{
     res.send("Api Runing");
 })
 app.use('/api/user',userRoutes);
+app.use('/api/chat',chatRoutes);
 // app.use(error);
 
 app.listen(port,()=>{
