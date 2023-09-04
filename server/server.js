@@ -8,14 +8,12 @@ const bodyparser=require('body-parser');
 const data=require('./data/data.js');
 app.use(cors());
 app.use(bodyparser.json());
+const userRoutes=require('./routes/userRoutes.js');
 
 app.get('/',(req,res)=>{
     res.send("Api Runing");
 })
-app.get('/api/chat',(req,res)=>{
-    res.send(data);
-})
-
+app.use('/api/routes',userRoutes);
 
 
 //
