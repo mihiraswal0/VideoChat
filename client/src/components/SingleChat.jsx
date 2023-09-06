@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import ProfileModal from "./miscellenaous/ProfileModal";
-// import ScrollableChat from "./ScrollableChat";
+ import ScrollableChat from "./ScrollableChat";
 // import Lottie from "react-lottie";
 // import animationData from "../animations/typing.json";
 
@@ -26,6 +26,103 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [istyping, setIsTyping] = useState(false);
     const toast = useToast();
     
+    const fetchMessages = async () => {
+      if (!selectedChat) return;
+  
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+  
+        setLoading(true);
+  
+        const { data } = await axios.get(
+          `http://localhost:5000/api/message/${selectedChat._id}`,
+          config
+        );
+
+        setMessages(data);
+        setLoading(false);
+  
+        // socket.emit("join chat", selectedChat._id);
+      } catch (error) {
+        toast({
+          title: "Error Occured!",
+          description: "Failed to Load the Messages",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+      }
+    };
+    
+  useEffect(() => {
+    fetchMessages();
+
+    // selectedChatCompare = selectedChat;
+    // eslint-disable-next-line
+  }, [selectedChat]);
+  
+    const sendMessage = async (event) => {
+      if (event.key === "Enter" && newMessage) {
+        // socket.emit("stop typing", selectedChat._id);
+        try {
+          console.log(newMessage);
+          const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+          };
+         
+          const { data } = await axios.post(
+            "http://localhost:5000/api/message",
+            {
+              content: newMessage,
+              chatId: selectedChat,
+            },
+            config
+          );
+          console.log(data);
+          setNewMessage("");
+          // socket.emit("new message", data);
+          setMessages([...messages, data]);
+        } catch (error) {
+          toast({
+            title: "Error Occured!",
+            description: "Failed to send the Message",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+          });
+        }
+      }
+    };
+    const typingHandler = (e) => {
+      setNewMessage(e.target.value);
+  
+      // if (!socketConnected) return;
+  
+      // if (!typing) {
+      //   setTyping(true);
+      //   socket.emit("typing", selectedChat._id);
+      // }
+      // let lastTypingTime = new Date().getTime();
+      // var timerLength = 3000;
+      // setTimeout(() => {
+      //   var timeNow = new Date().getTime();
+      //   var timeDiff = timeNow - lastTypingTime;
+      //   if (timeDiff >= timerLength && typing) {
+      //     socket.emit("stop typing", selectedChat._id);
+      //     setTyping(false);
+      //   }
+      // }, timerLength);
+    };
+
     return (
  <>
  {
@@ -58,7 +155,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <>
                   {selectedChat.chatName.toUpperCase()}
                   <UpdateGroupChatModal
-                    // fetchMessages={fetchMessages}
+                    fetchMessages={fetchMessages}
                     fetchAgain={fetchAgain}
                     setFetchAgain={setFetchAgain}
                   />
@@ -76,6 +173,36 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             borderRadius="lg"
             overflowY="hidden"
           >
+             {loading ? (
+              <Spinner
+                size="xl"
+                w={20}
+                h={20}
+                alignSelf="center"
+                margin="auto"
+              />
+            ) : (
+              <div className="messages">
+                <ScrollableChat messages={messages} />
+              </div>
+            )}
+
+            <FormControl
+              onKeyDown={sendMessage}
+              id="first-name"
+              isRequired
+              mt={3}
+              onChange={typingHandler}
+            >
+            
+              <Input
+                variant="filled"
+                bg="#E0E0E0"
+                placeholder="Enter a message.."
+                value={newMessage}
+                // onChange={typingHandler}
+              />
+            </FormControl>
             </Box>
         </>
     ):
