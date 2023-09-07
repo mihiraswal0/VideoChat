@@ -8,7 +8,6 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import { ChatState } from "../../Context/ChatProvider";
 
-
 const Login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
