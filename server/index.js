@@ -1,4 +1,5 @@
 const express=require('express');
+const path=require('path');
 const app=express();
 require('dotenv').config();
 require('./db/database.js');
@@ -12,17 +13,37 @@ const userRoutes=require('./routes/userRoutes.js');
 const { notFound,error } = require('./middleware/errorHandler.js');
 const chatRoutes =require('./routes/chatRoutes.js');
 const messageRoutes=require('./routes/messageRoutes.js');
-app.get('/',(req,res)=>{
-    res.send("Api Runing");
-})
+
 app.use('/api/user',userRoutes);
 app.use('/api/chat',chatRoutes);
 app.use('/api/message',messageRoutes);
 // app.use(error);
 
+
+// --------------------------deployment------------------------------
+
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1,"..", "/client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1,"..", "client", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
+
+// --------------------------deployment------------------------------
+
+
+
 const server=app.listen(port,()=>{
     console.log("Listening on port"+port);
 })
+
+
 const io=require('socket.io')(server,{
     pingTimeout:60000,
     cors:{
