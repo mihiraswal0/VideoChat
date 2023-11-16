@@ -7,7 +7,14 @@ const port=process.env.PORT ||5000;
 const cors=require('cors');
 const bodyparser=require('body-parser');
 const data=require('./data/data.js');
-app.use(cors());
+app.use(cors(
+    {
+        "origin": "*",
+        "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+        "preflightContinue": false,
+        "optionsSuccessStatus": 204
+      }
+));
 app.use(bodyparser.json());
 const userRoutes=require('./routes/userRoutes.js');
 const { notFound,error } = require('./middleware/errorHandler.js');
