@@ -9,11 +9,11 @@ const bodyparser=require('body-parser');
 const data=require('./data/data.js');
 app.use(cors(
     {
-        "origin": "*",
-        "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-        "preflightContinue": false,
-        "optionsSuccessStatus": 204
-      }
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
 ));
 app.use(bodyparser.json());
 const userRoutes=require('./routes/userRoutes.js');
@@ -29,9 +29,20 @@ app.use('/api/message',messageRoutes);
 
 // --------------------------deployment------------------------------
 
-app.get("/", (req, res) => {
-  res.send("API is running..");
-});
+const __dirname1 = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
+
 // --------------------------deployment------------------------------
 
 
