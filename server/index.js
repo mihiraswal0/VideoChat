@@ -25,7 +25,7 @@ app.use('/api/message',messageRoutes);
 
   app.get("/", (req, res) => {
     res.send("API is running..");
- 
+  })
 
 // --------------------------deployment------------------------------
 
