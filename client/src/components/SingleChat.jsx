@@ -14,7 +14,7 @@ import ProfileModal from "./miscellenaous/ProfileModal";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellenaous/UpdateGroupChatModel";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT="http://localhost:5000";
+const ENDPOINT=process.env.REACT_APP_PORT;
 var socket,selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { selectedChat, setSelectedChat, user, notification, setNotification } =
@@ -50,7 +50,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setLoading(true);
   
         const { data } = await axios.get(
-          `http://localhost:5000/api/message/${selectedChat._id}`,
+          `${process.env.REACT_APP_PORT}/api/message/${selectedChat._id}`,
           config
         );
 
@@ -97,7 +97,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       if (event.key === "Enter" && newMessage) {
         socket.emit("stop typing", selectedChat._id);
         try {
-          console.log(newMessage);
           const config = {
             headers: {
               "Content-type": "application/json",
@@ -106,7 +105,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           };
           setNewMessage("");
           const { data } = await axios.post(
-            "http://localhost:5000/api/message",
+            `${process.env.REACT_APP_PORT}/api/message`,
             {
               content: newMessage,
               chatId: selectedChat,

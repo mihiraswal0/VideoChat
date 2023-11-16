@@ -16,7 +16,6 @@ import Signup from "../components/authentication/Signup";
 
 const Homepage = () => {
   const history = useHistory();
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
     console.log(user);
@@ -37,6 +36,7 @@ const Homepage = () => {
         <Text fontSize="4xl" fontFamily="Work sans" textAlign="center" fontWeight="bold">
          M.E.R.N Chat
         </Text>
+        
       </Box>
       <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
         <Tabs isFitted variant="soft-rounded">

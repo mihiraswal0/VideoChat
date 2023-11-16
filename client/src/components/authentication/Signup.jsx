@@ -50,7 +50,7 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5000/api/user",
+        `${process.env.REACT_APP_PORT}/api/user`,
         {
           name,
           email,
@@ -59,7 +59,6 @@ const Signup = () => {
         },
         config
       );
-      console.log(data);
       toast({
         title: "Registration Successful",
         status: "success",
@@ -109,7 +108,6 @@ const Signup = () => {
       .then((res) => res.json())
       .then((data) => {
         setPic(data.url.toString());
-        console.log(data.url.toString());
         setPicLoading(false);
       })
       .catch((err) => {
