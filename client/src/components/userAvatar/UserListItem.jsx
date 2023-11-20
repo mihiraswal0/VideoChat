@@ -1,6 +1,6 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Box, Text } from "@chakra-ui/layout";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatState } from "../../Context/ChatProvider.jsx";
 
 const UserListItem = ({user,handleFunction }) => {
 //   const { user } = ChatState();

@@ -3,11 +3,11 @@ import { Box, Stack, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getSender } from "../config/ChatLogics";
-import ChatLoading from "./ChatLoading";
-import GroupChatModal from "./miscellenaous/GroupChatModal";
+import { getSender } from "../config/ChatLogics.jsx";
+import ChatLoading from "./ChatLoading.jsx";
+import GroupChatModal from "./miscellenaous/GroupChatModal.jsx";
 import { Button } from "@chakra-ui/react";
-import { ChatState } from "../Context/ChatProvider";
+import { ChatState } from "../Context/ChatProvider.jsx";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
