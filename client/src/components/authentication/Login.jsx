@@ -40,7 +40,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        `${process.env.REACT_APP_PORT}/api/user/login`,
+        `/api/user/login`,
         { email, password },
         config
       );

@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:5000",
+  "proxy": "https://videochat-api-8gev.onrender.com",
   "dependencies": {
     "@chakra-ui/icons": "^2.1.0",
     "@chakra-ui/modal": "^2.3.0",

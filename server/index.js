@@ -23,9 +23,13 @@ app.use('/api/message',messageRoutes);
 // --------------------------deployment------------------------------
 
 
-  app.get("/", (req, res) => {
-    res.send("API is running..");
-  })
+
+app.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.send("API is running..");
+});
+
+
 
 // --------------------------deployment------------------------------
 
