@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import Login from "../components/authentication/Login";
-import Signup from "../components/authentication/Signup";
+import Login from "../components/authentication/Login.jsx";
+import Signup from "../components/authentication/Signup.jsx";
 
 
 const Homepage = () => {
