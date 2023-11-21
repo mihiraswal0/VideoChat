@@ -4,7 +4,7 @@ Visual Chat  is a Full Stack Chat App.
 It allows user to chat in real time using Socket.io and store communciations details securely in Mongo Db Database.
 
 ## Demo
-**Link** : https://mernchat-v79u.onrender.com
+**Link** :https://video-chat-pi5eroai9-mihir-aswals-projects.vercel.app/
 ## Tech Stack
 
 **Client:** React JS
